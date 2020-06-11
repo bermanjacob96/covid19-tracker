@@ -4,8 +4,10 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\components",
-    "\\src\\app\\components\\countries"
+    "\\src\\app\\components\\countries",
+    "\\src\\app\\components\\dashboard-card",
+    "\\src\\app\\components\\home"
   ],
-  "SelectedNode": "\\src\\app\\components\\countries\\countries.component.html",
+  "SelectedNode": "\\src\\app\\components\\dashboard-card\\dashboard-card.component.ts",
   "PreviewInSolutionExplorer": false
 }
