@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { GlobalDataSummary } from 'src/app/models/global.data';
+import { GoogleChartInterface } from 'ng2-google-charts';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +15,29 @@ export class HomeComponent implements OnInit {
   totalDeaths = 0;
   totalRecovered = 0;
   globalData: GlobalDataSummary[];
+  pieChart: GoogleChartInterface = {
+    chartType : 'PieChart'
+  };
 
-  constructor(private dataService : DataServiceService) { }
+  constructor(private dataService: DataServiceService) { }
+
+  initChart() {
+    let datatable = [];
+    datatable.push(["Country", "Cases"])
+    this.globalData.forEach(cs => {
+      datatable.push([
+        cs.country, cs.confirmed
+      ])
+
+    })
+
+    this.pieChart = {
+      chartType: 'PieChart',
+      dataTable: datatable,
+      options: {'Country': 'Cases'},
+    //firstRowIsData: true,
+    };
+  }
 
   ngOnInit(): void {
 
@@ -29,8 +51,11 @@ export class HomeComponent implements OnInit {
               this.totalActive += cs.active
               this.totalConfirmed += cs.confirmed
               this.totalDeaths += cs.deaths
-              this.totalRecovered += cs.recovered}
+              this.totalRecovered += cs.recovered
+            }
           })
+
+          this.initChart();
         }
       }
     )
