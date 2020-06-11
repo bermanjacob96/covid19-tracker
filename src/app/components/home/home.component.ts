@@ -19,23 +19,35 @@ export class HomeComponent implements OnInit {
     chartType : 'PieChart'
   };
 
+  columnChart: GoogleChartInterface = {
+    chartType: 'ColumnChart'
+  }
+
   constructor(private dataService: DataServiceService) { }
 
   initChart() {
     let datatable = [];
     datatable.push(["Country", "Cases"])
     this.globalData.forEach(cs => {
-      datatable.push([
-        cs.country, cs.confirmed
-      ])
+      if (cs.confirmed > 2000) 
+        datatable.push([
+          cs.country, cs.confirmed
+        ])
+  
 
     })
 
     this.pieChart = {
       chartType: 'PieChart',
       dataTable: datatable,
-      options: {'Country': 'Cases'},
+      options: {height : 500},
     //firstRowIsData: true,
+    };
+
+    this.columnChart = {
+      chartType: 'ColumnChart',
+      dataTable: datatable,
+      options: { height: 500 },
     };
   }
 
