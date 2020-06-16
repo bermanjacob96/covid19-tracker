@@ -22,20 +22,37 @@ export class HomeComponent implements OnInit {
   columnChart: GoogleChartInterface = {
     chartType: 'ColumnChart'
   }
+    consolelog: any;
 
   constructor(private dataService: DataServiceService) { }
 
-  initChart() {
+  initChart(caseType: string) {
     let datatable = [];
     datatable.push(["Country", "Cases"])
+
     this.globalData.forEach(cs => {
-      if (cs.confirmed > 2000) 
-        datatable.push([
-          cs.country, cs.confirmed
-        ])
-  
+      let value: number;
+      if (caseType == 'c')
+        if (cs.confirmed > 2000)
+          value = cs.confirmed
+      if (caseType == 'a')
+        if (cs.active > 2000)
+          value = cs.active
+      if (caseType == 'd')
+        if (cs.deaths > 2000)
+          value = cs.deaths
+      if (caseType == 'r')
+        if (cs.recovered > 2000)
+          value = cs.recovered
+
+
+      datatable.push([
+        cs.country, value
+      ])
+
 
     })
+
 
     this.pieChart = {
       chartType: 'PieChart',
@@ -67,10 +84,15 @@ export class HomeComponent implements OnInit {
             }
           })
 
-          this.initChart();
+          this.initChart('c');
         }
       }
     )
+  }
+
+  updateChart(input: HTMLInputElement) {
+    console.log(input.value);
+    this.initChart(input.value)
   }
 
 }
